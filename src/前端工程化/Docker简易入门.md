@@ -1,10 +1,8 @@
-<img src="../images/Docker.png" style="width: 100px" />  
-
 ## 1. 术语
 
 docker的架构如下
 
-![b3651859ef1f.png](../images/b3651859ef1f.png)
+![b3651859ef1f.png](/b3651859ef1f.png)
 
 从图中可以看出几个组成部分
 
@@ -60,7 +58,7 @@ yum install -y docker-ce
 
 - 使用 docker-destop编辑
 
-![097baf81f5a9.png](../images/097baf81f5a9.png)
+![097baf81f5a9.png](/097baf81f5a9.png)
 
 - 编辑配置文件daemon.json，添加源地址
 

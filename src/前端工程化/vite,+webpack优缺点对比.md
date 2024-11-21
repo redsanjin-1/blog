@@ -1,5 +1,3 @@
-<img src="../images/vite.svg" style="width: 100px" />  
-
 ## 1.webpack原理
 
 webpack bundle everything

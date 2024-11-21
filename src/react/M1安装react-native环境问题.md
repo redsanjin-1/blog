@@ -2,7 +2,7 @@
 
 安装官网的[教程](https://www.reactnative.cn/docs/environment-setup)，在初始化项目的过程中，`Installing Ruby Gems`花费很长时间，仍然无法成功安装，搜索了一下才发现是以下几个原因导致的
 
-![image.png](../images/9554997e4a0a.png)
+![image.png](/9554997e4a0a.png)
 
 ## Ruby
 
@@ -79,7 +79,7 @@ npx react-native init AwesomeProject
 
 经常出现的错误：
 
-![image.png](../images/1c745adc0703.png)
+![image.png](/1c745adc0703.png)
 
 这是由于没有切换 CocoaPods 的镜像源导致的。解决方案是，切换到清华大学开源软件镜像站的镜像，切换方式如下：
 

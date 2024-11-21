@@ -2,7 +2,7 @@
 
 **HTTP(HyperText Transfer Protocol):** 超文本传输协议。是互联网上应用最广泛的一种网络协议。所有www文件都必须遵守的一个标准，是以 ASCII 码传输，建立在 TCP/IP 协议之上的应用层规范。简单点说就是一种固定的通讯规则。
 
-![dfa643a82212.png](../images/HTTP2-graphic.png)
+![dfa643a82212.png](/HTTP2-graphic.png)
 
 ## 2.HTTP/0.9版本
 

@@ -682,7 +682,7 @@
 
 将桶该着成一个`Map映射表`，不同的属性对应不同的`Set集合`。
 
-![image.png](../images/451fc5c8e28e.png)
+![image.png](/451fc5c8e28e.png)
 
 ```HTML
 <!DOCTYPE html>
@@ -890,7 +890,7 @@ pState1代理的源对象上也存在`name`属性
 
 将桶结构改成[WeakMap](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/WeakMap)( key必须是`对象且不可枚举`，因为是弱引用所以可以`自动进行垃圾回收`，比如state对象变为null时，就会进行垃圾回收，如果用`map`这个state便不会被回收，最终可能`导致内存溢出` )，将代理对象作为key，用于区分不同的代理对象
 
-![image.png](../images/2c9765c34a5e.png)
+![image.png](/2c9765c34a5e.png)
 
 ```JavaScript
 // 定义一个副作用函数桶
@@ -996,7 +996,7 @@ effect(function effectFn() {
 
 在 effectFn 函数内部存在一个三元表达式，根据字段 obj.ok 值的不同会执行不同的代码分支。当字段 obj.ok 的值发生变化时， 代码执行的分支会跟着变化，这就是所谓的分支切换。
 
-![image.png](../images/7d86d825d2d2.png)
+![image.png](/7d86d825d2d2.png)
 
 可以看到，副作用函数 effectFn 分别被字段 data.ok 和字段 data.text 所对应的依赖集合收集。
 

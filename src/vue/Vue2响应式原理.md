@@ -44,7 +44,7 @@ Vue 采用 数据劫持 结合 发布者-订阅者模式 的方式来实现数�
 
 - Watcher 是发布订阅者模型中的订阅者：订阅的数据改变时执行相应的回调函数（更新视图或表达式的值）。一个 Watcher 可以更新视图，如 HTML 模板中用到的 `{{test}}`，也可以执行一个 `$watch` 监督的表达式的回调函数（Vue 实例中的 watch 项底层是调用的 `$watch` 实现的），还可以更新一个计算属性（即 Vue 实例中的 `computed` 项）。
 
-![mvvm-in-vue.c3073223.jpg](../images/mvvm-in-vue.c3073223.jpg)
+![mvvm-in-vue.c3073223.jpg](/mvvm-in-vue.c3073223.jpg)
 
 ## Observer
 
@@ -235,7 +235,7 @@ updateComponent 函数的执行会间接触发渲染函数（`vm.$options.render
 
 ## 总结
 
-![reactive.165836dd.png](../images/reactive.165836dd.png)
+![reactive.165836dd.png](/reactive.165836dd.png)
 
 Vue 的响应式原理的核心就是观察这些数据的变化，当这些数据发生变化以后，能通知到对应的观察者以实现相关的逻辑。整个响应式原理最核心的实现就是 Dep 类，这个类实际上是连接数据与观察者的桥梁。
 

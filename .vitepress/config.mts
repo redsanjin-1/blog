@@ -4,11 +4,13 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: '洪三金的博客',
   description: '洪三金的博客',
+  base: '/blog/',
   srcDir: './src',
-  head: [['link', { rel: 'icon', href: '/vitepress-logo-mini.ico' }]],
+  cleanUrls: true,
+  head: [['link', { rel: 'icon', href: '/blog/vitepress-logo-mini.svg' }]],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    logo: '/images/avatar.png',
+    logo: '/avatar.png',
     nav: [
       { text: '首页', link: '/' },
       { text: '博客', link: '/vue/post' },
@@ -107,7 +109,6 @@ export default defineConfig({
         ],
       },
     ],
-    // logo: '/images/vitepress-logo-mini.svg',
     socialLinks: [{ icon: 'github', link: 'https://github.com/redsanjin-1' }],
     outline: 'deep',
   },

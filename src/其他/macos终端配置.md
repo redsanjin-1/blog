@@ -60,7 +60,7 @@ tree -d "src"
 tree -I "node_modules|tests"
 ```
 
-![image.png](../images/b56a743cc95f.png)
+![image.png](/b56a743cc95f.png)
 
 ### 3.3 从终端进入Finder & 从 Finder进入终端
 

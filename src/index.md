@@ -5,9 +5,9 @@ layout: home
 hero:
   name: "sanjin's blog"
   text: "洪三金的博客"
-  tagline: "把握现在、就是创造未来"
+  tagline: "把握现在、就是创造未来" 
   image:
-    src: "/images/avatar.jpeg"
+    src: "/avatar.jpeg"
     alt: sanjin
     style: "border-radius: 50%; border: 5px solid white; width: 150px; height: 150px;"
   actions:
