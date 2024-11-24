@@ -119,7 +119,7 @@ export default defineConfig({
     },
     footer: {
       message: '基于 MIT 许可发布',
-      copyright: '版权所有 © 2019-${new Date().getFullYear()} 洪三金',
+      copyright: `版权所有 © 2019-${new Date().getFullYear()} 洪三金`,
     },
     docFooter: {
       prev: '上一页',
