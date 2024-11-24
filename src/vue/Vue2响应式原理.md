@@ -10,7 +10,7 @@ MVVM 是 Model-View-ViewModel 的简写，即 **模型-视图-视图** 模型。
 
 在 MVVM 框架下 View 和 Model 是不能直接通信的，它们通过 ViewModel 来通信，ViewModel 通常要实现一个 Observer 观察者，当数据发生变化，ViewModel 能够监听到数据的这种变化，然后通知对应的视图做自动更新，而当用户操作视图，ViewModel 也能监听到视图的变化，然后通知数据做改动，这实际上就实现了数据的双向绑定。并且 MVVM 中的 View 和 ViewModel 可以互相通信。
 
-## 发布订阅模式
+# 发布订阅模式
 
 发布订阅模式主要包含哪些内容呢？
 
@@ -24,7 +24,7 @@ MVVM 是 Model-View-ViewModel 的简写，即 **模型-视图-视图** 模型。
 
 JavaScript 中事件模型，在 DOM 节点上绑定事件函数（`addEventListener`），触发的时候执行就是应用了发布-订阅模式。
 
-## 实现方式
+# 实现方式
 
 1. 脏值检查：Angular 是通过脏值检测的方式比对数据是否有变更，来决定是否更新视图。
 
@@ -44,9 +44,9 @@ Vue 采用 数据劫持 结合 发布者-订阅者模式 的方式来实现数�
 
 - Watcher 是发布订阅者模型中的订阅者：订阅的数据改变时执行相应的回调函数（更新视图或表达式的值）。一个 Watcher 可以更新视图，如 HTML 模板中用到的 `{{test}}`，也可以执行一个 `$watch` 监督的表达式的回调函数（Vue 实例中的 watch 项底层是调用的 `$watch` 实现的），还可以更新一个计算属性（即 Vue 实例中的 `computed` 项）。
 
-![mvvm-in-vue.c3073223.jpg](/mvvm-in-vue.c3073223.jpg)
+![mvvm-in-vue.c3073223.jpg](../images/mvvm-in-vue.c3073223.jpg)
 
-## Observer
+# Observer
 
 > Observer 类用于附加到每个被观察的对象。一旦附加后，观察者会将目标对象的 Property 键转换成用于**收集依赖**以及**调度更新**的 getters 和 setters。
 
@@ -128,7 +128,7 @@ function defineReactive(obj, key, val) {
 
 关于双向数据绑定以及 Dep、Watcher 实现参考[《从源码角度再看数据绑定》](https://github.com/answershuto/learnVue/blob/master/docs/%E4%BB%8E%E6%BA%90%E7%A0%81%E8%A7%92%E5%BA%A6%E5%86%8D%E7%9C%8B%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A.MarkDown)
 
-### 不足
+## 不足
 
 使用 Object.defineProperty 定义响应式的数据对象的访问器属性 getter 和 setter 进行数据劫持时存在以下问题。
 
@@ -146,7 +146,7 @@ function defineReactive(obj, key, val) {
 
 对于这两种情况，可以使用 `vm.$set` / `Vue.set` 和 `vm.items.splice(newLength)` 解决，具体参考[官方说明](https://cn.vuejs.org/v2/guide/list.html#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9)。
 
-## 订阅者 Dep
+# 订阅者 Dep
 
 订阅者 Dep 类，它的主要作用是用于存放 Watcher 观察者对象。主要实现了两件事情：
 
@@ -179,7 +179,7 @@ class Dep {
 
 Dep.target 相当于全局的 Watcher，因为同一时间只有一个 Watcher 被计算。这个静态属性表明了 Vue 当前计算的 Watcher。
 
-## 观察者 Watcher
+# 观察者 Watcher
 
 Watcher 的四个使用场景：
 
@@ -199,7 +199,7 @@ Watcher 只有在这四种场景中，Watcher 才会收集依赖，更新模版�
 
 Watcher 对象通过调用 updateComponent 方法达到更新视图的目的。其实 Watcher 并不实时更新视图，在实例化 Vue 构造函数时默认会将 Watcher 对象存在一个队列中，在下个 Tick 时更新异步更新视图，完成了性能优化。
 
-## 依赖收集
+# 依赖收集
 
 - 依赖收集就是订阅数据变化的 watcher 的收集
 
@@ -233,9 +233,9 @@ Watcher 原理通过对被观测目标的求值，触发数据的 `get` 拦截�
 
 updateComponent 函数的执行会间接触发渲染函数（`vm.$options.render`）的执行，而渲染函数的执行则会触发数据属性的 `get` 拦截器函数，从而将依赖（观察者）收集，当数据变化时重新执行 `updateComponent` 函数，这就完成了重新渲染。
 
-## 总结
+# 总结
 
-![reactive.165836dd.png](/reactive.165836dd.png)
+![reactive.165836dd.png](../images/reactive.165836dd.png)
 
 Vue 的响应式原理的核心就是观察这些数据的变化，当这些数据发生变化以后，能通知到对应的观察者以实现相关的逻辑。整个响应式原理最核心的实现就是 Dep 类，这个类实际上是连接数据与观察者的桥梁。
 
@@ -249,7 +249,7 @@ Vue 的渲染都是基于这个响应式系统的。在 Vue 的创建过程中�
 
 这就是整个 Vue 的响应式系统。
 
-## 参考
+# 参考
 
 - [梳理 Vue 双向绑定的实现原理](https://zhuanlan.zhihu.com/p/56725739)
 

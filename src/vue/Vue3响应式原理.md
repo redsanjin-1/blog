@@ -1,10 +1,10 @@
-![image.png](/6845e80aef5a.png)
+![image.png](../images/6845e80aef5a.png)
 
-## Vue2的响应式原理
+# Vue2的响应式原理
 
 可以先回顾下之前的文章，`Object.defineProperty` 有不少局限性，因此Vue 3 采用了全新的 `Proxy` 对象来实现整个响应式系统基础
 
-## 什么是 Proxy
+# 什么是 Proxy
 
 `Proxy` 是 `ES6` 新增的一个构造函数，用来创建一个 **目标对象的代理对象，拦截对原对象的所有操作；用户可以通过注册相应的拦截方法来实现对象操作时的自定义行为**。
 
@@ -36,7 +36,7 @@ delete proxyObj.age; // Deleting age property
 console.log(proxyObj.age); // undefined
 ```
 
-## reactive
+# reactive
 
 `reactive`是`vue3`中用于生成`引用类型`的`api`。
 
@@ -58,7 +58,7 @@ export function reactive(target: object) {
 }
 ```
 
-### createReactiveObject
+## createReactiveObject
 
 在`createReactiveObject`中，做的事情就是为`target`添加一个`proxy`代理。这是其核心，`reactive`最终拿到的是一个`proxy`代理，参考`Proxy`章节的简单事例就可以知道`reactive`是如何进行工作的了，那么在来看下`createReactiveObject`做了一些什么事情。
 
@@ -97,7 +97,7 @@ const proxy = new Proxy(
   return proxy
 ```
 
-### handles的类型
+## handles的类型
 
 在对象类型中，将`Object`和`Array`与`Map`,`Set`, `WeakMap`,`WeakSet`区分开来了。它们调用的是不同的`Proxy Handle`。
 
@@ -137,11 +137,11 @@ const proxy = new Proxy(
 
 > 由于篇幅有限，下文中只举例`mutableHandlers`当作分析的参考。当理解`mutableHandlers`后对于`collectionHandlers`只是时间的问题。
 
-### Proxy Handle
+## Proxy Handle
 
 和`Proxy`一样，`mutableHandlers`在内部分别定义`get`, `set`, `deleteProperty`, `has`, `oneKeys`等多个属性参数，完成依赖的收集
 
-![image.png](/8ec3584f6506.png)
+![image.png](../images/8ec3584f6506.png)
 
 在这里，我们用简单的`get`, `set`来进行简单的模拟实例。
 
@@ -171,7 +171,7 @@ function createSetter () {
 
 在`get`的时候会进行一个`track`的依赖收集，而`set`的时候则是触发`trigger`的触发机制。在`vue3`，而`trigger`和`track`的话都是在我们`effect.ts`当中声明的，那么接下来就来看看`依赖收集`和`响应触发`究竟做了一些什么吧。
 
-## Effect
+# Effect
 
 对于整个effect模块，将其分为三个部分来去阅读：
 
@@ -181,7 +181,7 @@ function createSetter () {
 
 - `trigger`: 触发响应，在`proxy`代理数据发生变化的时候调用。
 
-### effect
+## effect
 
 通过一段实例来看下`effect`的使用，并且了解它主要参数是一个函数。在函数内部会帮你执行一些副作用记录和特性判断。
 
@@ -265,11 +265,11 @@ function effect(eff) {
 }
 ```
 
-## track(依赖收集)
+# track(依赖收集)
 
 在`track`的时候，会进行我们所熟知的依赖收集，会将当前`activeEffect`添加到`dep`里面，而说起这一类的关系。它会有一个一对多对多的关系。
 
-![image.png](/4d24fc5efca4.png)
+![image.png](../images/4d24fc5efca4.png)
 
 从代码看也非常的清晰，首先我们会有一个一个总的`targetMap`它是一个`WeakMap`，`key`是`target(代理的对象)`, `value`是一个`Map`，称之为`depsMap`，它是用于管理当前`target`中每个`key`的`deps`也就是副作用依赖，也就是以前熟知的`depend`。在`vue3`中是通过`Set`来去实现的。
 
@@ -311,7 +311,7 @@ function track(target: object, type: TrackOpTypes, key: unknown) {
 }
 ```
 
-## trigger(响应触发)
+# trigger(响应触发)
 
 在`trigger`的时候，做的事情其实就是触发当前响应依赖的执行。
 
@@ -408,9 +408,9 @@ const depsMap = targetMap.get(target)
   }
 ```
 
-## vue2和vue3的对比
+# vue2和vue3的对比
 
-### vue2
+## vue2
 
 Vue2 是通过 Object.defineProperty 将对象的属性转换成 getter/setter 的形式来进行监听它们的变化，当读取属性值的时候会触发 getter 进行依赖收集，当设置对象属性值的时候会触发 setter 进行向相关依赖发送通知，从而进行相关操作。
 
@@ -418,7 +418,7 @@ Vue2 是通过 Object.defineProperty 将对象的属性转换成 getter/setter �
 
 Object.defineProperty 也可以实现对数组的监听的，但因为性能的原因 Vue2 放弃了这种方案，改由重写数组原型对象上的 7 个能操作数组内容的变更的方法，从而实现对数组的响应式监听。
 
-### vue3
+## vue3
 
 Vue3 则是通过 Proxy 对数据实现 getter/setter 代理，从而实现响应式数据，然后在副作用函数中读取响应式数据的时候，就会触发 Proxy 的 getter，在 getter 里面把对当前的副作用函数保存起来，将来对应响应式数据发生更改的话，则把之前保存起来的副作用函数取出来执行。
 
@@ -428,7 +428,7 @@ Vue3 对数组实现代理时，用于代理普通对象的大部分代码可以
 
 另外如果使用 push、pop、shift、unshift、splice 这些方法操作响应式数组对象时会间接读取和设置数组的 length 属性，所以我们也需要对这些数组的原型方法进行重新，让当使用这些方法间接读取 length 属性时禁止进行依赖追踪，这样就可以断开 length 属性与副作用函数之间的响应式联系了。
 
-## 参考
+# 参考
 
 - [Vue2与Vue3响应式原理与依赖收集详解](https://juejin.cn/post/7202454684657107005)
 

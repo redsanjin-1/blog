@@ -2,9 +2,9 @@
 
 安装官网的[教程](https://www.reactnative.cn/docs/environment-setup)，在初始化项目的过程中，`Installing Ruby Gems`花费很长时间，仍然无法成功安装，搜索了一下才发现是以下几个原因导致的
 
-![image.png](/9554997e4a0a.png)
+![image.png](../images/9554997e4a0a.png)
 
-## Ruby
+# Ruby
 
 在 React Native iOS 应用的依赖管理中会使用到它。Mac 电脑上默认集成了 Ruby，但却和 React Native 所依赖的 Ruby 版本有些不一致。因此，你需要通过 rbenv 对 Ruby 进行版本管理，就像使用 NVM 工具用于管理 Node 的版本一样。首先，你可以运行如下命令查看当前的 Ruby 版本。
 
@@ -51,7 +51,7 @@ mv ruby-2.7.6.tar.bz2 ~/.rbenv/cache/
 
 这样再运行 `rbenv install 2.7.6` 就会跳过下载直接安装
 
-## CocoaPods
+# CocoaPods
 
 由于使用gem安装一直失败（即使换了源），后面使用homebrew没问题
 
@@ -71,7 +71,7 @@ pod setup
 pod --version
 ```
 
-## 新建项目
+# 新建项目
 
 ```shell
 npx react-native init AwesomeProject
@@ -79,7 +79,7 @@ npx react-native init AwesomeProject
 
 经常出现的错误：
 
-![image.png](/1c745adc0703.png)
+![image.png](../images/1c745adc0703.png)
 
 这是由于没有切换 CocoaPods 的镜像源导致的。解决方案是，切换到清华大学开源软件镜像站的镜像，切换方式如下：
 

@@ -1,4 +1,4 @@
-## 1、nvm 设置下载源
+# 1、nvm 设置下载源
 
 **nvm install** 可能由于网络问题报错，可以直接配置 **nvm install** 的源地址。
 
@@ -30,7 +30,7 @@ arch -x86_64 zsh
 
 nvm和n最大的区别是，nvm是多版本隔离，n是共享一个版本；n 每一次切换版本时，需要反复读写硬盘，伤寿命；n 无法在本地同时开启多个不同版本的项目；所以 jenkins等构建工具只支持 nvm；
 
-## 2、nrm管理register源
+# 2、nrm管理register源
 
 由于记住上述的淘宝镜像url比较麻烦，可以下载nrm进行管理，可以方便的切换不同的register。
 
@@ -40,7 +40,7 @@ nrm ls
 nrm use taobao
 ```
 
-## 3、volta锁定项目node版本
+# 3、volta锁定项目node版本
 
 nvm需要用户手动切换node版本（或者编写`.nvmrc`），无法与具体项目关联，( 如果 node 版本不统一，带来的问题可能就是整个项目无法运行；而如果包管理器不统一，带来的则可能是 `package-lock.json`、`yarn.lock`、`pnpm-lock.yaml` 在每个成员电脑上都不一致的灾难 )，[volta](https://volta.sh/) 会在 package.json 中添加 volta 字段，启动项目即可顺利进行版本切换。
 
@@ -70,7 +70,7 @@ volta pin node@16
 
 之后当用户进入到当前项目中时，volta 就会检测到 package.json 中声明的 node 版本，并且切换至该 node 版本。
 
-## 4、corepack-管理包管理器的管理器
+# 4、corepack-管理包管理器的管理器
 
 Corepack是一个实验性工具，在 Node.js v16.13 版本中引入，它可以指定项目使用的包管理器以及版本, 简单来说，Corepack 会成为 Node.js 官方的内置 CLI，用来管理『包管理工具（~~npm~~、yarn、pnpm、~~cnpm~~）』，用户无需手动安装，即『包管理器的管理器』。
 
@@ -80,7 +80,7 @@ Corepack是一个实验性工具，在 Node.js v16.13 版本中引入，它可�
 
 - 可以强制团队项目中使用他特定的包管理器版本，而无需他们在每次需要进行更新时手动同步它，如果不符合配置将在控制台进行错误提示。
 
-### corepack 用法
+## corepack 用法
 
 由于corepack 是一个实验性工具，所以默认是没有启动的，需要显式启用，需要运行指令 corepack enable 进行启动；在项目package.json 文件中新增属性 "packageManager"，比如
 
@@ -114,7 +114,7 @@ Usage Error: This project is configured to use yarn
 
 - 兼容性还有些问题，npm 还无法拦截也就是说 即便配置了 packageManager 使用 yarn，但是依然可以调用全局 npm 安装
 
-## 5、参考
+# 5、参考
 
 - [nvm-windows](https://github.com/coreybutler/nvm-windows)
 

@@ -1,4 +1,4 @@
-## [nvm](https://github.com/nvm-sh/nvm)使用
+# [nvm](https://github.com/nvm-sh/nvm)使用
 
 ```Shell
 # 安装 nvm（Node 版本管理器）
@@ -33,13 +33,13 @@ nvm alias default 20.16.0
 20.16.0
 ```
 
-## 多项目切换 node
+# 多项目切换 node
 
-### 问题
+## 问题
 
 `nvm`会将第一次安装的`node`版本设置为`default`版本，后续新建`shell`会定位回`default`版本，而不是上一次`nvm use`的版本，多项目切换不太方便
 
-### 解决方案
+## 解决方案
 
 ```Shell
 # 如果你想持续一段时间使用 18.7.0，可以使用 alias 命令它为默认版本

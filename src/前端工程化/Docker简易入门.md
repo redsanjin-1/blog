@@ -1,8 +1,8 @@
-## 1. 术语
+# 1. 术语
 
 docker的架构如下
 
-![b3651859ef1f.png](/b3651859ef1f.png)
+![b3651859ef1f.png](../images/b3651859ef1f.png)
 
 从图中可以看出几个组成部分
 
@@ -18,7 +18,7 @@ docker的架构如下
 
 - registry: 镜像仓库，存储大量镜像，可以从镜像仓库拉取和推送镜像
 
-## 2. 下载docker
+# 2. 下载docker
 
 - 到 [docker官网](https://www.docker.com/) 下载安装包
 
@@ -54,11 +54,11 @@ yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/d
 yum install -y docker-ce
 ```
 
-## 3. 设置国内镜像源
+# 3. 设置国内镜像源
 
 - 使用 docker-destop编辑
 
-![097baf81f5a9.png](/097baf81f5a9.png)
+![097baf81f5a9.png](../images/097baf81f5a9.png)
 
 - 编辑配置文件daemon.json，添加源地址
 
@@ -73,7 +73,7 @@ yum install -y docker-ce
 }
 ```
 
-## 4. 查看配置
+# 4. 查看配置
 
 ```Shell
 docker info
@@ -86,13 +86,13 @@ docker info
 #  https://mirror.ccs.tencentyun.com/
 ```
 
-## 5. 常见命令
+# 5. 常见命令
 
-### 5.1. Dockerfile命令
+## 5.1. Dockerfile命令
 
 建议阅读官方的 [dockerfile-best-practices](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
 
-#### FROM
+### FROM
 
 基于一个就有的镜像，格式如下
 
@@ -103,7 +103,7 @@ FROM <image> [AS <name>]
 FROM <image>[:<tag>] [AS <name>]
 ```
 
-#### WORKDIR
+### WORKDIR
 
 设置为工作目录
 
@@ -111,7 +111,7 @@ FROM <image>[:<tag>] [AS <name>]
 WORKDIR <path>
 ```
 
-#### ADD, COPY
+### ADD, COPY
 
 两者都可以把目录，或者 url 地址文件加入到镜像的文件系统中(ADD 可以解压 tar.gz 文件，COPY原封不动复制过去，官方推荐使用COPY，因为语义更简单)
 
@@ -119,7 +119,7 @@ WORKDIR <path>
 ADD [--chown=<user>:<group>] <src>... <dest>
 ```
 
-#### RUN
+### RUN
 
 执行命令，由于 ufs 的文件系统，它会在当前镜像的顶层新增一层
 
@@ -127,7 +127,7 @@ ADD [--chown=<user>:<group>] <src>... <dest>
 RUN <command>
 ```
 
-#### CMD
+### CMD
 
 指定容器如何启动
 
@@ -144,7 +144,7 @@ CMD ["param1","param2"]
 CMD command param1 param2
 ```
 
-#### ARG，ENV
+### ARG，ENV
 
 `ARG` 和 `ENV` 的效果一样，都是设置**环境变量**。不同的是，`ARG` 所设置是`构建时`的环境变量，在将来容器`运行时`是不会存在这些环境变量的。
 
@@ -158,7 +158,7 @@ ADD nginx-${NGINX_VERSION}.tar.gz /
 ENV PORT 3000
 ```
 
-### 5.2 Docker CLI命令
+## 5.2 Docker CLI命令
 
 ```Shell
 # 开启docker服务
@@ -208,9 +208,9 @@ docker tag vue-bpmn-image:1.0.0 192.168.1.98/docker-steps/vue-bpmn-image:1.0.0
  docker push 192.168.1.98/docker-steps/vue-bpmn-image:1.0.0
 ```
 
-## 6. 优化镜像大小
+# 6. 优化镜像大小
 
-### 6.1 选择镜基础镜像
+## 6.1 选择镜基础镜像
 
 在Node.js中，有许多变体镜像发行版，相比官方镜像，体积更加精简。这些标签包括：
 
@@ -231,7 +231,7 @@ EXPOSE 4000
 CMD npm start
 ```
 
-### 6.2 使用.dockerignore 来最小化和精简Docker镜像
+## 6.2 使用.dockerignore 来最小化和精简Docker镜像
 
 在创建上述镜像时， COPY. . 命令会复制项目目录的所有文件和文件夹。但是 RUN npm install 生成的 node_modules文件夹，以及RUN npm run build 生成的构建文件夹是没有必要复制到镜像。
 
@@ -244,7 +244,7 @@ build
 dist
 ```
 
-### 6.3 减少Docker镜像层
+## 6.3 减少Docker镜像层
 
 Dockerfile 中的每一条指令都会逐步创建一个新层，层数越多相对体积便会越大。
 
@@ -278,7 +278,7 @@ EXPOSE 4000
 CMD npm start
 ```
 
-### 6.4 多阶段构建
+## 6.4 多阶段构建
 
 Docker 允许将多个构建步骤整合在一个 Dockerfile 文件中，这个构建步骤之间可以存在依赖关系，也可以进行文件传递，还可以更好地利用缓存。
 
@@ -342,7 +342,7 @@ COPY --from=build app/dist /usr/share/nginx/html
 
 > 如果是 npm 通常需要缓存 `~/.npm` 目录
 
-### 6.5 使用工具缩小镜像大小
+## 6.5 使用工具缩小镜像大小
 
 - DockerSlim 可以删除不必要的文件和依赖项，并创建值包括必要组件的镜像；
 
@@ -350,17 +350,17 @@ COPY --from=build app/dist /usr/share/nginx/html
 
 - Docker-squash可以将多个镜像层压缩成单个层。
 
-## 7. 容器编排工具
+# 7. 容器编排工具
 
 当容器数量很多后，可以通过一下三种常用的编排工具进行管理
 
-### 7.1. Docker Compose
+## 7.1. Docker Compose
 
-### 7.2. Docker Swarm
+## 7.2. Docker Swarm
 
-### 7.3. Kubernetes
+## 7.3. Kubernetes
 
-## 8. 参考
+# 8. 参考
 
 - [官网文档](https://docs.docker.com/reference/)
 

@@ -1,12 +1,12 @@
-## 1. 什么是Nginx
+# 1. 什么是Nginx
 
 Nginx 是一个免费的，开源的，高性能的 **HTTP 服务器和反向代理**，以及 IMAP / POP3 代理服务器。**Nginx 以其高性能，稳定性，丰富的功能，简单的配置和低资源消耗而闻名。**
 
-## 2. Nginx架构
+# 2. Nginx架构
 
 Nginx 里有一个 master 进程和多个 worker 进程。master 进程并不处理网络请求，主要负责调度工作进程：加载配置、启动工作进程及非停升级。worker 进程负责处理网络请求与响应。基础架构设计，如下图所示：
 
-![image.png](/a6385af8d96c.png)
+![image.png](../images/a6385af8d96c.png)
 
 Master负责管理worker进程，worker进程负责处理网络事件。**整个框架被设计为一种依赖事件驱动、异步、非阻塞的模式**。
 
@@ -18,7 +18,7 @@ Master负责管理worker进程，worker进程负责处理网络事件。**整个
 
 - Master监控并统一管理worker行为。在worker异常后，可以主动拉起worker进程，从而提升了系统的可靠性。并且由Master进程控制服务运行中的程序升级、配置项修改等操作，从而增强了整体的动态可扩展与热更的能力。
 
-## 3. 安装Nginx
+# 3. 安装Nginx
 
 - windows 从官网[下载](https://nginx.org/en/download.html)
 
@@ -28,7 +28,7 @@ Master负责管理worker进程，worker进程负责处理网络事件。**整个
 
 - 编译nginx的第三方版本，[Tengine](https://www.w3schools.cn/nginx/nginx_install_tengine.html)或者[OpenResty](https://www.w3schools.cn/nginx/nginx_install_openresty.html)
 
-## 4. 常见命令
+# 4. 常见命令
 
 ```Shell
 nginx -s reopen #重启Nginx
@@ -52,9 +52,9 @@ systemctl stop nginx                               # stop Nginx服务命令
 systemctl status nginx                            # 查看Nginx服务运行状态命令
 ```
 
-## 5. Nginx配置
+# 5. Nginx配置
 
-### 5.1 典型配置
+## 5.1 典型配置
 
 Nginx 的常见配置指令域如下表所示
 
@@ -157,7 +157,7 @@ http {   # 配置使用最频繁的部分，代理、缓存、日志定义等绝
 }
 ```
 
-### 5.2 配置反向代理
+## 5.2 配置反向代理
 
 运用到了 [ngx_http_proxy_module](http://nginx.org/en/docs/http/ngx_http_proxy_module.html), 常见配置如下( 推荐用 [switchhost](https://github.com/oldj/SwitchHosts/releases) 改hosts )
 
@@ -179,7 +179,7 @@ server {
 
 ```
 
-### 5.3 配置gzip
+## 5.3 配置gzip
 
 运用到了 [ngx_http_gzip_module](http://nginx.org/en/docs/http/ngx_http_gzip_module.html), 可配置在http目录，server目录，location目录
 
@@ -219,7 +219,7 @@ gzip_http_version 1.1;
 
 > 更进一步，我们可以下载 `google`的开源模块 [brotli](https://github.com/google/brotli)（必须开启https, 同时对服务器计算能力要求更高），性能比`gzip`提高 17-25%。
 
-### 5.4 配置负载均衡
+## 5.4 配置负载均衡
 
 主要思想就是把负载均匀合理地分发到多个服务器上，实现压力分流的目的。
 
@@ -262,7 +262,7 @@ Nginx 提供了好几种分配方式，默认为**轮询**，就是轮流来。�
 
 4. **fair**（第三方），按后端服务器的响应时间分配，响应时间短的优先分配，依赖第三方插件 nginx-upstream-fair，需要先安装；
 
-### 5.5 配置HTTPS
+## 5.5 配置HTTPS
 
 ```Nginx
 server {
@@ -284,7 +284,7 @@ server {
 }
 ```
 
-### 5.6 图片防盗链
+## 5.6 图片防盗链
 
 referer 请求头控制模块可以通过设置请求头中的属性字段 Referer 的值控制访问的拒绝与允许。Referer 字段用来表示当前请求的跳转来源，由于该字段可能会涉及隐私权问题，部分浏览器允许用户不发送该属性字段，因此也会存在浏览器正常的请求头中无 Referer 字段的情况。
 
@@ -316,7 +316,7 @@ server {
 
 ```
 
-### 5.7 单页面项目 history 路由配置
+## 5.7 单页面项目 history 路由配置
 
 ```Nginx
 server {
@@ -343,7 +343,7 @@ server {
 }
 ```
 
-### 5.8 HTTP请求转发到HTTPS
+## 5.8 HTTP请求转发到HTTPS
 
 ```Nginx
 server {
@@ -367,7 +367,7 @@ server {
 
 ```
 
-### 5.9 日志切割
+## 5.9 日志切割
 
 - 先确定nginx日志路径和pid路径
 
@@ -412,13 +412,13 @@ crontab -e
 0 0 * * *  /bin/bash /data/nginx/sh/cut_nginx_logs.sh
 ```
 
-### 5.10 配置缓存
+## 5.10 配置缓存
 
 相关`HTTP`缓存，可以查看之前的文章
 
 [一文读懂HTTP缓存](https://flowus.cn/1708c4c1-153e-4e63-b476-c6be1f0525cd)
 
-#### 5.10.1 强缓存
+### 5.10.1 强缓存
 
 - Cache-Control字段： HTTP1.2产物
 
@@ -448,7 +448,7 @@ location /test {
 }
 ```
 
-#### 5.10.2 协商缓存
+### 5.10.2 协商缓存
 
 我们知道，Nginx 默认是开启了协商缓存的，这里我们说一下如何**关闭协商缓存**
 
@@ -468,7 +468,7 @@ location /test {
 }
 ```
 
-#### 5.10.3 Pargma
+### 5.10.3 Pargma
 
 http1.0 产物； 优先级高于 Cache-Control/Expires; 它的存在目的是向后兼容
 
@@ -476,7 +476,7 @@ http1.0 产物； 优先级高于 Cache-Control/Expires; 它的存在目的是�
 add_header Pargma 'no-cache'; #禁止缓存
 ```
 
-#### 5.10.4 实践场景
+### 5.10.4 实践场景
 
 在实际开发中，需要考虑一个常见的问题 那就是如何做到，**在更新版本的时候，尽可能命中缓存的同时，让客户端本地的缓存失效**
 
@@ -502,7 +502,7 @@ location /test {
 
 ```
 
-## 6. 参考
+# 6. 参考
 
 - [Nginx官网](http://nginx.org/en/docs/)
 

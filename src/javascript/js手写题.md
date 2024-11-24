@@ -1,4 +1,4 @@
-## 数据类型判断
+# 数据类型判断
 
 ```JavaScript
 function typeOf(target) {
@@ -10,7 +10,7 @@ console.log(typeOf({})) // 'object'
 conosle.log(typeOf(new Date)) // 'date'
 ```
 
-## 实现 instanceof
+# 实现 instanceof
 
 ```JavaScript
 function myInstanceof(left, right) {
@@ -29,7 +29,7 @@ function myInstanceof(left, right) {
 }
 ```
 
-## 实现 Object.create
+# 实现 Object.create
 
 ```JavaScript
 function create(obj) {
@@ -39,7 +39,7 @@ function create(obj) {
 }
 ```
 
-## 实现 new 操作符
+# 实现 new 操作符
 
 在调用 `new` 的过程中会发生以上四件事情：
 
@@ -67,7 +67,7 @@ function _new(constructor, ...args) {
 };
 ```
 
-## 防抖
+# 防抖
 
 函数防抖是指在事件被触发 n 秒后再执行回调，如果在这 n 秒内事件又被触发，则重新计时。这可以使用在一些点击请求的事件上，避免因为用户的多次点击向后端发送多次请求。
 
@@ -94,7 +94,7 @@ function debounce(fn, wait) {
 }
 ```
 
-## 节流
+# 节流
 
 函数节流是指规定一个单位时间，在这个单位时间内，只能有一次触发事件的回调函数执行，如果在同一个单位时间内某事件被触发多次，只有一次能生效。节流可以使用在 scroll 函数的事件监听上，通过事件节流来降低事件调用的频率。
 
@@ -117,7 +117,7 @@ function throttle(fn, delay) {
 }
 ```
 
-## 深拷贝
+# 深拷贝
 
 ```JavaScript
 const isObject = (target) => {
@@ -164,9 +164,9 @@ const deepClone = (target, cache = new WeakMap()) => {
 
 详见[这里](https://juejin.cn/post/6844903929705136141)
 
-## 继承
+# 继承
 
-### 原型链继承
+## 原型链继承
 
 ```JavaScript
 function Animal() {
@@ -190,7 +190,7 @@ console.log(dog2.colors)  // ['black', 'white', 'brown']
 
 - 问题2：子类在实例化的时候不能给父类构造函数传参；
 
-### 借用构造函数继承
+## 借用构造函数继承
 
 ```JavaScript
 function Animal(name) {
@@ -206,7 +206,7 @@ function Dog(name) {
 
 借用构造函数实现继承解决了原型链继承的 2 个问题：引用类型共享问题以及传参问题。但是由于方法必须定义在构造函数中，所以会导致每次创建子类实例都会创建一遍方法。
 
-### 组合继承
+## 组合继承
 
 组合继承结合了原型链和盗用构造函数，将两者的优点集中了起来。基本的思路是使用原型链继承原型上的属性和方法，而通过盗用构造函数继承实例属性。这样既可以把方法定义在原型上以实现重用，又可以让每个实例都有自己的属性。
 
@@ -232,7 +232,7 @@ console.log(dog2)
 // { name: "哈赤", colors: ["black", "white"], age: 1 }
 ```
 
-### 寄生氏组合继承
+## 寄生氏组合继承
 
 组合继承已经相对完善了，但还是存在问题，它的问题就是调用了 2 次父类构造函数，第一次是在 new Animal()，第二次是在 Animal.call() 这里。
 
@@ -278,7 +278,7 @@ inheritPrototype(Dog, Animal)
 
 ```
 
-### class实现继承
+## class实现继承
 
 ```JavaScript
 class Animal {
@@ -299,7 +299,7 @@ class Dog extends Animal {
 
 更多原型与原型链，请查看[这里](https://juejin.cn/post/7129157532970385421)
 
-## 事件总线（发布订阅模式）
+# 事件总线（发布订阅模式）
 
 ```JavaScript
 class EventEmitter {
@@ -351,7 +351,7 @@ eventBus.emit('aaa', false, '布兰', 12)
 // 'hello, 布兰 12'
 ```
 
-## 函数柯里化
+# 函数柯里化
 
 什么叫函数柯里化？其实就是将使用多个参数的函数转换成一系列使用一个参数的函数的技术。
 
@@ -380,7 +380,7 @@ function curry(fn) {
 
 实现函数原型方法
 
-## call
+# call
 
 使用一个指定的 this 值和一个或多个参数来调用一个函数。
 
@@ -409,7 +409,7 @@ Function.prototype.call2 = function (context) {
 }
 ```
 
-## apply
+# apply
 
 apply 和 call 一样，唯一的区别就是 call 是传入不固定个数的参数，而 apply 是传入一个数组。
 
@@ -442,7 +442,7 @@ Function.prototype.apply2 = function (context, arr) {
 }
 ```
 
-## bind
+# bind
 
 bind 方法会创建一个新的函数，在 bind() 被调用时，这个新函数的 this 被指定为 bind() 的第一个参数，而其余参数将作为新函数的参数，供调用时使用。
 
@@ -474,7 +474,7 @@ Function.prototype.bind2 = function (context) {
 }
 ```
 
-## 实现 Promise
+# 实现 Promise
 
 实现 Promise 需要完全读懂 [Promise A+ 规范](https://link.juejin.cn?target=https%3A%2F%2Fpromisesaplus.com%2F)，不过从总体的实现上看，有如下几个点需要考虑到：
 
@@ -637,7 +637,7 @@ const resolvePromise = (promise2, x, resolve, reject) = > {
 
 - [100 行代码实现 Promises/A+ 规范](https://link.juejin.cn/?target=https%3A%2F%2Fmp.weixin.qq.com%2Fs%2FqdJ0Xd8zTgtetFdlJL3P1g)
 
-### Promise.resolve
+## Promise.resolve
 
 Promsie.resolve(value) 可以将任何值转成值为 value 状态是 fulfilled 的 Promise，但如果传入的值本身是 Promise 则会原样返回它。
 
@@ -651,7 +651,7 @@ Promise.resolve = function(value) {
 }
 ```
 
-### Promise.reject
+## Promise.reject
 
 和 Promise.resolve() 类似，Promise.reject() 会实例化一个 rejected 状态的 Promise。但与 Promise.resolve() 不同的是，如果给 Promise.reject() 传递一个 Promise 对象，则这个对象会成为新 Promise 的值。
 
@@ -661,7 +661,7 @@ Promise.reject = function(reason) {
 }
 ```
 
-### Promise.all
+## Promise.all
 
 Promise.all 的规则是这样的：
 
@@ -690,7 +690,7 @@ Promise.all = function(promiseArr) {
 }
 ```
 
-### Promise.race
+## Promise.race
 
 Promise.race 会返回一个由所有可迭代实例中第一个 fulfilled 或 rejected 的实例包装后的新实例。
 
@@ -708,7 +708,7 @@ Promise.race = function(promiseArr) {
 }
 ```
 
-### Promise.allSettled
+## Promise.allSettled
 
 Promise.allSettled 的规则是这样：
 
@@ -744,7 +744,7 @@ Promise.allSettled = function(promiseArr) {
 }
 ```
 
-### Promise.any
+## Promise.any
 
 Promise.any 的规则是这样：
 
@@ -774,7 +774,7 @@ Promise.any = function(promiseArr) {
 }
 ```
 
-### Promise并行限制
+## Promise并行限制
 
 就是实现有并行限制的Promise调度器问题。
 
@@ -830,7 +830,7 @@ scheduler.taskStart()
 // 4
 ```
 
-## 参考
+# 参考
 
 - [死磕 36 个 JS 手写题（搞懂后，提升真的大）](https://juejin.cn/post/6946022649768181774)
 
