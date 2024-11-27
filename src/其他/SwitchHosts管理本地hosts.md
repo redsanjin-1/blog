@@ -24,11 +24,11 @@ https://raw.hellogithub.com/hosts
 
 
 
-![image.png](../images/ea004accbaa4.png)
+![image.png](https://ik.imagekit.io/redsanjin/blog/ea004accbaa4.png)
 
 
 
-![image.png](../images/c6014617e824.png)
+![image.png](https://ik.imagekit.io/redsanjin/blog/c6014617e824.png)
 
 
 

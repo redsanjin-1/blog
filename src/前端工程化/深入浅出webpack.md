@@ -1,4 +1,4 @@
-![webpack.docschina.org_.png](../images/36821301ec15.png)
+![webpack.docschina.org_.png](https://ik.imagekit.io/redsanjin/blog/36821301ec15.png)
 
 # 前言
 
@@ -298,7 +298,7 @@ demohook.call(1,2,3)
 
 # 热更新原理
 
-![07e7ba6e1d98.png](../images/07e7ba6e1d98.png)
+![07e7ba6e1d98.png](https://ik.imagekit.io/redsanjin/blog/07e7ba6e1d98.png)
 
 `Webpack` 的热更新又称热替换（`Hot Module Replacement`），缩写为 `HMR`。 这个机制可以做到不用刷新浏览器而将新变更的模块替换掉旧的模块。
 

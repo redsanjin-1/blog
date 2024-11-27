@@ -1,4 +1,4 @@
-![image.png](../images/6845e80aef5a.png)
+![image.png](https://ik.imagekit.io/redsanjin/blog/6845e80aef5a.png)
 
 # Vue2的响应式原理
 
@@ -141,7 +141,7 @@ const proxy = new Proxy(
 
 和`Proxy`一样，`mutableHandlers`在内部分别定义`get`, `set`, `deleteProperty`, `has`, `oneKeys`等多个属性参数，完成依赖的收集
 
-![image.png](../images/8ec3584f6506.png)
+![image.png](https://ik.imagekit.io/redsanjin/blog/8ec3584f6506.png)
 
 在这里，我们用简单的`get`, `set`来进行简单的模拟实例。
 
@@ -269,7 +269,7 @@ function effect(eff) {
 
 在`track`的时候，会进行我们所熟知的依赖收集，会将当前`activeEffect`添加到`dep`里面，而说起这一类的关系。它会有一个一对多对多的关系。
 
-![image.png](../images/4d24fc5efca4.png)
+![image.png](https://ik.imagekit.io/redsanjin/blog/4d24fc5efca4.png)
 
 从代码看也非常的清晰，首先我们会有一个一个总的`targetMap`它是一个`WeakMap`，`key`是`target(代理的对象)`, `value`是一个`Map`，称之为`depsMap`，它是用于管理当前`target`中每个`key`的`deps`也就是副作用依赖，也就是以前熟知的`depend`。在`vue3`中是通过`Set`来去实现的。
 

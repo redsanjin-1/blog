@@ -6,7 +6,7 @@ Nginx 是一个免费的，开源的，高性能的 **HTTP 服务器和反向代
 
 Nginx 里有一个 master 进程和多个 worker 进程。master 进程并不处理网络请求，主要负责调度工作进程：加载配置、启动工作进程及非停升级。worker 进程负责处理网络请求与响应。基础架构设计，如下图所示：
 
-![image.png](../images/a6385af8d96c.png)
+![image.png](https://ik.imagekit.io/redsanjin/blog/a6385af8d96c.png)
 
 Master负责管理worker进程，worker进程负责处理网络事件。**整个框架被设计为一种依赖事件驱动、异步、非阻塞的模式**。
 

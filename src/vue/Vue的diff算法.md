@@ -1,4 +1,4 @@
-![image.png](../images/ead326195962.png)
+![image.png](https://ik.imagekit.io/redsanjin/blog/ead326195962.png)
 
 组件渲染会返回vdom，渲染器再把vdom同步到真实dom中，当再次渲染时，会产生新vdom，渲染器会对比两棵vdom树，对有差异的部分通过增删改的api更新真实dom。这里对比两棵 vdom树，找到有差异的部分的算法，就叫做diff算法。Diff 算法，在 Vue 里面就是叫做 `patch` ，它的核心就是参考 [Snabbdom](https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Fsnabbdom%2Fsnabbdom)。
 
@@ -87,7 +87,7 @@ for (let i = 0; i < newChildren.length; i++) {
 
 如果没找到，那就执行插入，锚点是上一个节点的 nextSibling。
 
-![image.png](../images/21bb59a339ac.png)
+![image.png](https://ik.imagekit.io/redsanjin/blog/21bb59a339ac.png)
 
 那如果找到了可复用的节点之后，那移动到哪里呢？
 
@@ -103,7 +103,7 @@ if (prevVNode) {
 
 要插入到 i 的位置，那就要取 i-1 位置的节点的 nextSibling 做为锚点来插入当前节点。
 
-![image.png](../images/e2a40fd2bd32.png)
+![image.png](https://ik.imagekit.io/redsanjin/blog/e2a40fd2bd32.png)
 
 但是并不是所有的节点都需要移动，比如处理到第二个新的 vnode，发现它在旧的 vnode 数组中的下标为 4，说明本来就是在后面了，那就不需要移动了。反之，如果是 vnode 查找到的对应的旧的 vnode 在当前 index 之前才需要移动。
 
@@ -174,7 +174,7 @@ for (let i = 0; i < oldChildren.length; i++) {
 
 这就是一个完整的 diff 算法的实现。
 
-![image.png](../images/b6c0f1e96fb9.png)
+![image.png](https://ik.imagekit.io/redsanjin/blog/b6c0f1e96fb9.png)
 
 这个 diff 算法我们是从一端逐个处理的，叫做简单 diff 算法。
 
@@ -223,7 +223,7 @@ function vue2Diff(prevChildren, nextChildren, parent) {
 
 使用以上四步进行对比，去寻找`key`相同的可复用的节点，当在某一步中找到了则停止后面的寻找。具体对比顺序如下图
 
-![image.png](../images/73c064edaf78.png)
+![image.png](https://ik.imagekit.io/redsanjin/blog/73c064edaf78.png)
 
 对比顺序代码结构如下:
 
@@ -357,7 +357,7 @@ function vue2Diff(prevChildren, nextChildren, parent) {
 
 我们来解决第一个问题：**什么情况下需要移动**，我们还是以上图为例。
 
-![image.png](../images/ce4d8d7b5cb9.png)
+![image.png](https://ik.imagekit.io/redsanjin/blog/ce4d8d7b5cb9.png)
 
 当我们在第一个循环时，在`第四步`发现**旧列表的尾节点**`oldEndNode`与**新列表的头节点**`newStartNode`的`key`相同，是可复用的`DOM`节点。通过观察我们可以发现，**原本在旧列表末尾的节点，却是新列表中的开头节点，没有人比他更靠前，因为他是第一个，所以我们只需要把当前的节点移动到原本旧列表中的第一个节点之前，让它成为第一个节点即可**。
 
@@ -385,13 +385,13 @@ function vue2Diff(prevChildren, nextChildren, parent) {
 }
 ```
 
-![image.png](../images/972ecdd82ac9.png)
+![image.png](https://ik.imagekit.io/redsanjin/blog/972ecdd82ac9.png)
 
 然后我们进入第二次循环，我们在`第二步`发现，**旧列表的尾节点**`oldEndNode`和**新列表的尾节点**`newEndNode`为复用节点。**原本在旧列表中就是尾节点，在新列表中也是尾节点，说明该节点不需要移动**，所以我们什么都不需要做。
 
 同理，如果是**旧列表的头节点**`oldStartNode`和**新列表的头节点**`newStartNode`为复用节点，我们也什么都不需要做。
 
-![image.png](../images/376f313557c1.png)
+![image.png](https://ik.imagekit.io/redsanjin/blog/376f313557c1.png)
 
 进入第三次循环，我们在`第三部`发现，**旧列表的头节点**`oldStartNode`和**新列表的尾节点**`newEndNode`为复用节点。到这一步聪明如你肯定就一眼可以看出来了，我们只要将`DOM-A`移动到`DOM-B`后面就可以了。
 
@@ -420,7 +420,7 @@ function vue2Diff(prevChildren, nextChildren, parent) {
 }
 ```
 
-![image.png](../images/23d086b0855d.png)
+![image.png](https://ik.imagekit.io/redsanjin/blog/23d086b0855d.png)
 
 OK，进入最后一个循环。在`第一步`**旧列表**头节点`oldStartNode`与**新列表**头节点`newStartNode`位置相同，所以啥也不用做。然后结束循环，这就是`Vue2 双端比较`的原理。
 
@@ -428,7 +428,7 @@ OK，进入最后一个循环。在`第一步`**旧列表**头节点`oldStartNod
 
 上一小节，我们讲了`双端比较`的原理，但是有一种特殊情况，当四次对比都**没找到**复用节点时，我们只能拿**新列表**的第一个节点去**旧列表**中找与其`key`相同的节点。
 
-![image.png](../images/46d92e8ca4e4.png)
+![image.png](https://ik.imagekit.io/redsanjin/blog/46d92e8ca4e4.png)
 
 ```JavaScript
 function vue2Diff(prevChildren, nextChildren, parent) {
@@ -454,7 +454,7 @@ function vue2Diff(prevChildren, nextChildren, parent) {
 
 找节点的时候其实会有两种情况：一种在**旧列表**中找到了，另一种情况是没找到。我们先以上图为例，说一下找到的情况。
 
-![image.png](../images/731f9b351834.png)
+![image.png](https://ik.imagekit.io/redsanjin/blog/731f9b351834.png)
 
 当我们在旧列表中找到对应的`VNode`，我们只需要将找到的节点的`DOM`元素，移动到开头就可以了。这里的逻辑其实和`第四步`的逻辑是一样的，只不过`第四步`是移动的尾节点，这里是移动找到的节点。`DOM`移动后，由我们将**旧列表**中的节点改为`undefined`，这是**至关重要**的一步，因为我们已经做了节点的移动了所以我们不需要进行再次的对比了。最后我们将头指针`newStartIndex`向后移一位。
 
@@ -489,7 +489,7 @@ function vue2Diff(prevChildren, nextChildren, parent) {
 
 如果在**旧列表**中没有找到复用节点呢？很简单，直接创建一个新的节点放到最前面就可以了，然后后移头指针`newStartIndex`。
 
-![image.png](../images/80fda7dc1fc7.png)
+![image.png](https://ik.imagekit.io/redsanjin/blog/80fda7dc1fc7.png)
 
 ```JavaScript
 
@@ -552,11 +552,11 @@ function vue2Diff(prevChildren, nextChildren, parent) {
 
 我们先来看一个例子
 
-![image.png](../images/9fdf15cb6653.png)
+![image.png](https://ik.imagekit.io/redsanjin/blog/9fdf15cb6653.png)
 
 这个例子非常简单，几次循环都是尾节点相同，尾指针一直向前移动，直到循环结束，如下图
 
-![image.png](../images/88f89eb04098.png)
+![image.png](https://ik.imagekit.io/redsanjin/blog/88f89eb04098.png)
 
 此时`oldEndIndex`以及小于了`oldStartIndex`，但是**新列表**中还有剩余的节点，我们只需要将剩余的节点依次插入到`oldStartNode`的`DOM`之前就可以了。为什么是插入`oldStartNode`之前呢？原因是剩余的节点在**新列表**的位置是位于`oldStartNode`之前的，如果剩余节点是在`oldStartNode`之后，`oldStartNode`就会先行对比，这个需要思考一下，其实还是与`第四步`的思路一样。
 
