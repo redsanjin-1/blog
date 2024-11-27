@@ -88,11 +88,11 @@ docker info
 
 # 5. 常见命令
 
-## 5.1. Dockerfile命令
+## 5.1. [Dockerfile命令](https://docs.docker.com/reference/dockerfile)
 
 建议阅读官方的 [dockerfile-best-practices](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
 
-### FROM
+### [FROM](https://docs.docker.com/reference/dockerfile/#from)
 
 基于一个就有的镜像，格式如下
 
@@ -103,7 +103,7 @@ FROM <image> [AS <name>]
 FROM <image>[:<tag>] [AS <name>]
 ```
 
-### WORKDIR
+### [WORKDIR](https://docs.docker.com/reference/dockerfile/#workdir)
 
 设置为工作目录
 
@@ -111,15 +111,15 @@ FROM <image>[:<tag>] [AS <name>]
 WORKDIR <path>
 ```
 
-### ADD, COPY
+### [ADD](https://docs.docker.com/reference/dockerfile/#add), [COPY](https://docs.docker.com/reference/dockerfile/#copy)
 
-两者都可以把目录，或者 url 地址文件加入到镜像的文件系统中(ADD 可以解压 tar.gz 文件，COPY原封不动复制过去，官方推荐使用COPY，因为语义更简单)
+两者都可以把目录，或者 url 地址文件加入到镜像的文件系统中(ADD 从远程下载文件，也可以解压 tar.gz 文件，COPY原封不动复制过去，官方推荐使用COPY，因为语义更简单)
 
 ```Dockerfile
 ADD [--chown=<user>:<group>] <src>... <dest>
 ```
 
-### RUN
+### [RUN](https://docs.docker.com/reference/dockerfile/#run)
 
 执行命令，由于 ufs 的文件系统，它会在当前镜像的顶层新增一层
 
@@ -127,7 +127,7 @@ ADD [--chown=<user>:<group>] <src>... <dest>
 RUN <command>
 ```
 
-### CMD
+### [CMD](https://docs.docker.com/reference/dockerfile/#cmd)
 
 指定容器如何启动
 
@@ -160,7 +160,7 @@ ENV PORT 3000
 
 ## 5.2 Docker CLI命令
 
-```Shell
+```bash
 # 开启docker服务
 service docker start
 # 启动 docker 后台服务
@@ -170,6 +170,8 @@ systemctl daemon-reload
 # 重启docker服务
 systemctl restart docker
 
+# 搜素镜像, 可以到 hub.docker.com 查看更多
+docker search nginx
 # docker拉取镜像
 docker pull 镜像别名:版本号
 # 生成镜像, --node-cache 不使用缓存
@@ -184,10 +186,10 @@ docker images
 # 查看容器列表,不加-a查看正在运行的，加上-a查看所有容器
 docker ps -a
 # 删除容器
-docker rm 容器ID/容器别名
-# 启动容器
-#（-d 后台运行, --name 容器别名, -p 宿主机端口:容器端口, --network 桥接网络别名, 最后是镜像名称:镜像版本）
-docker run -d  --restart always --name jianghu-server -p 3006:3006 node-server:1.0.0
+docker rm 容器ID/容器别名 
+# 启动容器 https://docs.docker.com/reference/cli/docker/container/run/
+#（-d 后台运行, --restart always 启动时服务启动 --name 容器别名, -p 宿主机端口:容器端口, 最后是镜像名称:镜像版本）
+docker run -d  --restart always --name sanjin-server -p 3006:3006 node-server:1.0.0
 # 关闭一个已启动容器 
 docker stop 容器ID/容器别名
 # 启动一个关闭的容器 
@@ -197,15 +199,32 @@ docker inspect 容器ID/容器别名
 # 进入容器内部
 docker exec -it 容器ID/容器别名 /bin/bash
 
+# 容器运行后，数据都在容器内部，如果容器删除，下线会导致数据丢失，因此需要将关键数据挂载到宿主机的目录持久化数据
+# 查看卷
+docker volume ls
+# 创建卷
+docker volume create ngconf
+# 检查卷，其中的Mountpoint 就是宿主机挂载的位置，可以对其进行修改
+docker volume inspect ngconf
+# 目录挂载, 宿主机需要有对应文件(-v /vue-repo/dist:/usr/share/nginx/html)
+docker run -d --name mynginx -v /vue-repo/dist:/usr/share/nginx/html -p 80:80 nginx:latest
+# 卷映射，会双向映射文件 (-v ngconf:/etc/nginx)
+docker run -d --name mynginx -v ngconf:/etc/nginx -p 80:80 nginx:latest
+
 # 创建一个桥接模式的网络，local-net为网络别名
 docker network create -d bridge local-net
 # 查看网络配置详情
 docker network inspect local-net
 
-# 配置镜像tag
-docker tag vue-bpmn-image:1.0.0 192.168.1.98/docker-steps/vue-bpmn-image:1.0.0
+# 登录远程仓库
+docker login 192.168.1.98
+# 配置镜像tag 仓库地址/镜像名称:版本号
+docker tag vue-bpmn-image:1.0.0 192.168.1.98/redsanjin/vue-bpmn-image:1.0.0
+# 推荐也打上latest的tag, 这样其他人不加版本号，默认拉取 latest
+docker tag vue-bpmn-image:1.0.0 192.168.1.98/redsanjin/vue-bpmn-image:latest
 # 发布镜像到远程服务器(需要先打tag)
- docker push 192.168.1.98/docker-steps/vue-bpmn-image:1.0.0
+docker push 192.168.1.98/redsanjin/vue-bpmn-image:1.0.0
+docker push 192.168.1.98/redsanjin/vue-bpmn-image:latest
 ```
 
 # 6. 优化镜像大小
@@ -354,11 +373,139 @@ COPY --from=build app/dist /usr/share/nginx/html
 
 当容器数量很多后，可以通过一下三种常用的编排工具进行管理
 
-## 7.1. Docker Compose
+## 7.1. [Docker Compose](https://docs.docker.com/compose/)
+### 7.1.1. 核心概念：
 
-## 7.2. Docker Swarm
+1. Compose 文件（compose file）：这是一个 YAML 格式的文件，通常命名为 docker-compose.yml，它定义了多容器应用程序中的服务、网络和卷。在这个文件中，你可以指定每个容器的镜像、环境变量、卷挂载点等。
 
-## 7.3. Kubernetes
+2. 服务（Service）：服务是你定义在 Compose 文件中的应用程序组件。一个服务可以由多个相同的容器实例组成，这些容器实例是无状态的，并且可以独立扩展。
+
+3. 容器（Container）：服务中的每个实例都是一个容器。容器是 Docker 的基本运行单位，它们运行应用程序代码及其依赖。
+
+4. 镜像（Image）：镜像是一个只读的模板，用于创建容器。在 Compose 文件中，你指定服务使用的镜像，可以是预构建的镜像，也可以是构建自 Dockerfile 的镜像。
+
+5. 环境变量（Environment Variables）：你可以在 Compose 文件中设置环境变量，这些变量将被传递给服务中的容器。
+
+6. 依赖（Dependencies）：在 Compose 文件中，你可以定义服务之间的依赖关系，确保在启动服务时，依赖的服务先于依赖它的服务启动。
+
+7. 网络（Networks）：Docker Compose 允许你定义网络，这些网络可以连接多个容器，使它们能够相互通信。你可以创建自定义网络，也可以使用默认的网络。
+
+8. 卷（Volumes）：卷是一种数据持久化机制，它允许你将数据保存在容器之外。在 Compose 文件中，你可以定义卷，并将其挂载到一个或多个服务的容器中。
+
+9. 构建上下文（Build Context）：如果你使用自定义镜像，你需要提供一个构建上下文，这是一个包含 Dockerfile 和其他构建依赖的目录。
+
+10. 扩展（Scaling）：Docker Compose 允许你轻松地扩展服务，通过简单的命令增加或减少服务中的容器实例数量。
+
+11. 命令（Commands）：在 Compose 文件中，你可以指定服务启动时执行的命令，这可以覆盖容器镜像中默认的启动命令。
+
+12. 配置（Configs）：配置允许你将敏感数据（如配置文件或密钥）传递给容器，而无需将它们直接嵌入镜像或暴露在 Compose 文件中。
+
+### 7.1.2. yaml文件
+```yaml
+# 定义一个名为myblog的Docker Compose项目
+name: myblog
+# 定义两个服务：mysql和wordpress
+services:
+  # 定义mysql服务
+  mysql:
+    # 容器名称为mysql
+    container_name: mysql
+    # 使用mysql:8.0镜像
+    image: mysql:8.0
+    # 将主机的3306端口映射到容器的3306端口
+    ports:
+      - "3306:3306"
+    # 设置环境变量
+    environment:
+      # 设置root用户的密码为123456
+      - MYSQL_ROOT_PASSWORD=123456
+      # 设置要创建的数据库名为wordpress
+      - MYSQL_DATABASE=wordpress
+    # 挂载卷
+    volumes:
+      # 将mysql-data卷挂载到容器的/var/lib/mysql目录
+      - mysql-data:/var/lib/mysql
+      # 将主机的/myconf目录挂载到容器的/etc/mysql/conf.d目录
+      - /app/myconf:/etc/mysql/conf.d
+    # 设置容器总是重新启动
+    restart: always
+    # 将容器加入到blog网络中
+    networks:
+      - blog
+
+  # 定义wordpress服务
+  wordpress:
+    # 使用wordpress镜像
+    image: wordpress
+    # 将主机的8080端口映射到容器的80端口
+    ports:
+      - "8080:80"
+    # 设置环境变量
+    environment:
+      # 设置数据库主机为mysql
+      WORDPRESS_DB_HOST: mysql
+      # 设置数据库用户为root
+      WORDPRESS_DB_USER: root
+      # 设置数据库密码为123456
+      WORDPRESS_DB_PASSWORD: 123456
+      # 设置要连接的数据库名为wordpress
+      WORDPRESS_DB_NAME: wordpress
+    # 挂载卷
+    volumes:
+      # 将wordpress卷挂载到容器的/var/www/html目录
+      - wordpress:/var/www/html
+    # 设置容器总是重新启动
+    restart: always
+    # 将容器加入到blog网络中
+    networks:
+      - blog
+    # 设置wordpress服务依赖于mysql服务
+    depends_on:
+      - mysql
+
+# 定义两个卷：mysql-data和wordpress
+volumes:
+  mysql-data:
+  wordpress:
+
+# 定义一个名为blog的网络
+networks:
+  blog:
+```
+
+### 7.1.3. 常用命令
+```bash
+# 启动所有服务
+docker-compose up -d
+# 停止并删除所有服务
+docker-compose down
+# 查看所有服务的日志
+docker-compose logs
+# 查看所有服务的状态
+docker-compose ps
+# 进入某个服务的容器
+docker-compose exec [service_name] bash
+# 构建所有服务
+docker-compose build
+# 拉取所有服务的镜像
+docker-compose pull
+# 推送所有服务的镜像
+docker-compose push
+# 停止所有服务
+docker-compose stop
+# 启动所有服务
+docker-compose start
+# 重启所有服务
+docker-compose restart
+# 查看所有服务的进程
+docker-compose top
+# 查看docker-compose.yml文件的配置
+docker-compose config
+```
+
+## 7.2. [Docker Swarm](https://docs.docker.com/engine/swarm/)
+
+## 7.3. [Kubernetes](https://kubernetes.io/zh-cn/)
 
 # 8. 参考
 
